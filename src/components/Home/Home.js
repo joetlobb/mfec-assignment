@@ -37,6 +37,7 @@ const Home = React.memo((props) => {
       else { props.onAddTodo(inputTodo.name, inputTodo.info) };
       setInputTodo({ name: '', info: '' })
       setEnableInfoBtn(false);
+      setEnableClearBtn(false)
       setAddingInfo(false);
     } else if (method === 'addInfo') {
       setAddingInfo(true);
@@ -49,8 +50,11 @@ const Home = React.memo((props) => {
         item = item.toLowerCase();
         return item.search(searchFor) >= 0 ? id : null
       })
-      const newIdOfMatched = idOfMatched.filter(id => id !== null)
-      setMatchedSearch(newIdOfMatched);
+      if (idOfMatched !== []) {
+
+        const newIdOfMatched = idOfMatched.filter(id => id !== null)
+        setMatchedSearch(newIdOfMatched);
+      }
       setEnableInfoBtn(false);
       if (addingInfo) setAddingInfo(false);
       setEnableClearBtn(true);
@@ -63,7 +67,7 @@ const Home = React.memo((props) => {
   };
 
   let matchedSearchTodos = [];
-  if (matchedSearch && matchedSearch.length !== 0) {
+  if (matchedSearch.length !== 0) {
     for (let item of matchedSearch) {
       for (let i in props.todosStatus) {
         console.log(item, i)
@@ -73,7 +77,7 @@ const Home = React.memo((props) => {
       }
     }
     console.log(matchedSearchTodos)
-  };
+  } else {matchedSearchTodos = [<div></div>]};
 
   return (
     <React.Fragment>
@@ -96,8 +100,8 @@ const Home = React.memo((props) => {
                 focus:bg-gray-200 " size="25"
                   placeholder="Enter some task..." value={inputTodo.name}
                   onChange={(e) => inputHandler(e.target.value, 'name')}></input>
-                <button className="block sm:inline-block mx-2 sm:ml-0 mb-2 px-4 bg-red-500 hover:bg-indigo-700 
-                focus:bg-indigo-700 text-white rounded-lg px-0 py-1 font-semibold">New</button>
+                <button className="block sm:inline-block mx-auto sm:mx-2 sm:ml-0 mb-2 px-4 bg-red-500 hover:bg-indigo-700 
+                focus:bg-indigo-700 text-white rounded-lg px-0 py-1 font-semibold">Add</button>
                 <button className="block sm:inline-block mx-auto sm:ml-0 mb-2 px-4 bg-indigo-500 hover:bg-indigo-700 
                 focus:bg-indigo-700 text-white rounded-lg px-0 py-1 font-semibold"
 
@@ -125,8 +129,8 @@ const Home = React.memo((props) => {
       </form>
 
       {/* todo lists */}
-
-      <Todo todos={matchedSearch && matchedSearch.length !== 0 ? matchedSearchTodos : props.todosStatus}
+      { matchedSearch.length === 0 && enableClearBtn ? <div className="flex justify-center mb-4">Not Found!</div> : null}
+      <Todo todos={matchedSearch.length !== 0 ? matchedSearchTodos : props.todosStatus}
         toggle={props.onToggleTodo}
       />
     </React.Fragment >

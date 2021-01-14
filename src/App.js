@@ -26,8 +26,8 @@ function App() {
       </div>
       <footer className="w-screen bg-indigo-900 p-4">
         <div className="text-center text-sm text-gray-50 font-light tracking-wider">Assignment Completed by Gulyapas Poonkawinsiri.
-          <br></br>Using React Hooks and Tailwind (First Time Usage)
-          <br></br>Github Source Code</div>
+          <br></br>Using React Hooks and Tailwind (First Time Usage)</div>
+          <br></br><a className="flex justify-center w-48 mx-auto bg-white rounded-lg hover:bg-red-400" href="https://github.com/joetlobb/cheddo-assignment">Github Source Code</a>
       </footer>
     </BrowserRouter>
   );
