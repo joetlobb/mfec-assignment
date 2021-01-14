@@ -55,9 +55,11 @@ const Todo = (props) => {
   const onSubmitHandler = (e, id, method) => {
     e.preventDefault();
     if (method === 'edit') {
+      // todo... fix when input empty input
+      // todo... fix when submit without any changes in todo name and info
       props.onEditTodo(id, inputTodo.name, inputTodo.info);
     } else if (method === 'del') {
-      props.onRemoveTodo(id);
+      props.onRemoveTodo(id, inputTodo.name);
     };
     setInputEditing({ editing: false, id: null });
     setInputTodo({ name: null, info: null });
@@ -78,9 +80,9 @@ const Todo = (props) => {
                   {inputEditing.editing ? null
                     : todo.isDone ?
                       <FontAwesomeIcon icon={faCheck}
-                        className={classes.isDone} onClick={() => props.toggle(id)} />
+                        className={classes.isDone} onClick={() => props.toggle(id, todo.name)} />
                       : <FontAwesomeIcon icon={faCheck}
-                        className={classes.isNotDone} onClick={() => props.toggle(id)} />}
+                        className={classes.isNotDone} onClick={() => props.toggle(id, todo.name)} />}
 
                   <form className="flex flex-row justify-center" onSubmit={(e) => onSubmitHandler(e, id, 'edit')} >
                     <div className="flex flex-col">
@@ -121,9 +123,9 @@ const Todo = (props) => {
               <div className="flex flex-row items-center justify-start">
                 {todo.isDone ?
                   <FontAwesomeIcon icon={faCheck}
-                    className={classes.isDone} onClick={() => props.toggle(id)} />
+                    className={classes.isDone} onClick={() => props.toggle(id, todo.name)} />
                   : <FontAwesomeIcon icon={faCheck}
-                    className={classes.isNotDone} onClick={() => props.toggle(id)} />}
+                    className={classes.isNotDone} onClick={() => props.toggle(id, todo.name)} />}
                 <div className="flex flex-col">
                   <div className="text-md font-medium pt-2 leading-4 break-all break-words"
                     onClick={() => editingHandler(id)}>
@@ -162,7 +164,7 @@ const Todo = (props) => {
 const mapDispatchToProps = dispatch => {
   return {
     onEditTodo: (id, name, info) => dispatch(editTodo(id, name, info)),
-    onRemoveTodo: (id) => dispatch(removeTodo(id))
+    onRemoveTodo: (id, name) => dispatch(removeTodo(id, name))
   };
 };
 

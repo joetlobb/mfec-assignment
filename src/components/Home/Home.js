@@ -5,37 +5,74 @@ import { toggleTodo, addTodo } from '../../store/actions';
 import Todo from '../Todo/Todo';
 
 const Home = React.memo((props) => {
-  const [inputTodo, setInputTodo] = useState({name: '', info: ''});
+  const [inputTodo, setInputTodo] = useState({ name: '', info: '' });
   const [enableInfoBtn, setEnableInfoBtn] = useState(false);
   const [addingInfo, setAddingInfo] = useState(false);
+  const [matchedSearch, setMatchedSearch] = useState([]);
+  const [enableClearBtn, setEnableClearBtn] = useState(false);
 
   useEffect(() => {
     console.log('HOME RENDERING');
   }, [props]);
 
   const push = () => {
-    // props.history.push('/history');
-    console.log(inputTodo)
-    console.log(props.todosStatus)
-  }
+    console.log(matchedSearch)
+  };
 
   const inputHandler = (input, desc) => {
-    if (input !== '') { setEnableInfoBtn(true) } else { setEnableInfoBtn(false) };
-    if (desc === 'name') {setInputTodo({ ...inputTodo, name: input })} 
+    if (input !== '' && matchedSearch.length !== 0) { setEnableInfoBtn(false) } else if (input !== '') { setEnableInfoBtn(true) } else {
+      setInputTodo({ name: '', info: '' });
+      setMatchedSearch([])
+      setEnableClearBtn(false)
+      setEnableInfoBtn(false);
+    };
+    if (desc === 'name') { setInputTodo({ ...inputTodo, name: input }) }
     else if (desc === 'info') setInputTodo({ ...inputTodo, info: input });
   };
 
   const onSubmitHandler = (e, method) => {
     e.preventDefault();
     if (method === 'add' && inputTodo.name !== '') {
-      if (inputTodo.info === '') {props.onAddTodo(inputTodo.name, '...')}
-      else {props.onAddTodo(inputTodo.name, inputTodo.info)};
-      setInputTodo({name: '', info: ''})
+      if (inputTodo.info === '') { props.onAddTodo(inputTodo.name, '...') }
+      else { props.onAddTodo(inputTodo.name, inputTodo.info) };
+      setInputTodo({ name: '', info: '' })
       setEnableInfoBtn(false);
       setAddingInfo(false);
     } else if (method === 'addInfo') {
       setAddingInfo(true);
+    } else if (method === 'search' && props.todosStatus && props.todosStatus.length !== 0) {
+      const searchList = [];
+      props.todosStatus.map((todo) => searchList.push(todo.name));
+      let newSearchList = searchList.map(item => item.replace(/\s+/g, ''));
+      const searchFor = inputTodo.name;
+      const idOfMatched = newSearchList.map((item, id) => {
+        item = item.toLowerCase();
+        return item.search(searchFor) >= 0 ? id : null
+      })
+      const newIdOfMatched = idOfMatched.filter(id => id !== null)
+      setMatchedSearch(newIdOfMatched);
+      setEnableInfoBtn(false);
+      if (addingInfo) setAddingInfo(false);
+      setEnableClearBtn(true);
+
+    } else if (method === 'clear') {
+      setInputTodo({ name: '', info: '' });
+      setMatchedSearch([]);
+      setEnableClearBtn(false);
     };
+  };
+
+  let matchedSearchTodos = [];
+  if (matchedSearch && matchedSearch.length !== 0) {
+    for (let item of matchedSearch) {
+      for (let i in props.todosStatus) {
+        console.log(item, i)
+        if (item === +i) {
+          matchedSearchTodos.push(props.todosStatus[item])
+        }
+      }
+    }
+    console.log(matchedSearchTodos)
   };
 
   return (
@@ -62,11 +99,18 @@ const Home = React.memo((props) => {
                 <button className="block sm:inline-block mx-2 sm:ml-0 mb-2 px-4 bg-red-500 hover:bg-indigo-700 
                 focus:bg-indigo-700 text-white rounded-lg px-0 py-1 font-semibold">New</button>
                 <button className="block sm:inline-block mx-auto sm:ml-0 mb-2 px-4 bg-indigo-500 hover:bg-indigo-700 
-                focus:bg-indigo-700 text-white rounded-lg px-0 py-1 font-semibold">Search</button>
+                focus:bg-indigo-700 text-white rounded-lg px-0 py-1 font-semibold"
+
+                  onClick={(e) => onSubmitHandler(e, 'search')}
+                >Search</button>
               </div>
               {enableInfoBtn ? <button className="block w-16 sm:inline-block mx-auto mb-2 px-1 bg-red-500 hover:bg-indigo-700 
                 focus:bg-indigo-700 text-xs text-white rounded-lg px-0 py-1 font-semibold focus:outline-none "
-                onClick={(e) => onSubmitHandler(e, 'addInfo')}>Add info</button> 
+                onClick={(e) => onSubmitHandler(e, 'addInfo')}>Add info</button>
+                : null}
+              {enableClearBtn ? <button className="block w-16 sm:inline-block mx-auto mb-2 px-1 bg-red-500 hover:bg-indigo-700 
+                focus:bg-indigo-700 text-xs text-white rounded-lg px-0 py-1 font-semibold focus:outline-none "
+                onClick={(e) => onSubmitHandler(e, 'clear')}>Clear</button>
                 : null}
               {addingInfo ? <input className="block sm:inline-block ml-0 mb-2 
                 sm:mr-2 h-8 border-b pl-4 text-xs focus:outline-none 
@@ -82,7 +126,7 @@ const Home = React.memo((props) => {
 
       {/* todo lists */}
 
-      <Todo todos={props.todosStatus}
+      <Todo todos={matchedSearch && matchedSearch.length !== 0 ? matchedSearchTodos : props.todosStatus}
         toggle={props.onToggleTodo}
       />
     </React.Fragment >
@@ -91,13 +135,13 @@ const Home = React.memo((props) => {
 
 const mapStateToProps = state => {
   return {
-    todosStatus: state.reducers.todos
+    todosStatus: state.reducers.todos,
   };
 };
 
 const mapDispatchToProps = dispatch => {
   return {
-    onToggleTodo: (id) => dispatch(toggleTodo(id)),
+    onToggleTodo: (id, name) => dispatch(toggleTodo(id, name)),
     onAddTodo: (name, info) => dispatch(addTodo(name, info))
   };
 };

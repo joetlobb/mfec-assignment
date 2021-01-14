@@ -1,8 +1,9 @@
-import { TOGGLE_STATUS, EDIT_TODO, ADD_TODO, REMOVE_TODO } from './actionTypes'
+import { TOGGLE_STATUS, EDIT_TODO, ADD_TODO, REMOVE_TODO, DELETE_LOGS } from './actionTypes'
 
-export const toggleTodo = id => ({
+export const toggleTodo = (id, name) => ({
   type: TOGGLE_STATUS,
-  id: id
+  id: id,
+  name: name
 });
 export const addTodo = (name, info) => ({
   type: ADD_TODO,
@@ -15,7 +16,11 @@ export const editTodo = (id, name, info) => ({
   name: name,
   info: info
 });
-export const removeTodo = (id) => ({
+export const removeTodo = (id, name) => ({
   type: REMOVE_TODO,
-  id: id
+  id: id,
+  name: name
+});
+export const deleteLogs = () => ({
+  type: DELETE_LOGS
 });
