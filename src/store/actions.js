@@ -1,4 +1,4 @@
-import { TOGGLE_STATUS, EDIT_TODO, ADD_TODO } from './actionTypes'
+import { TOGGLE_STATUS, EDIT_TODO, ADD_TODO, REMOVE_TODO } from './actionTypes'
 
 export const toggleTodo = id => ({
   type: TOGGLE_STATUS,
@@ -14,4 +14,8 @@ export const editTodo = (id, name, info) => ({
   id: id,
   name: name,
   info: info
+});
+export const removeTodo = (id) => ({
+  type: REMOVE_TODO,
+  id: id
 });

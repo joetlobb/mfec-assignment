@@ -1,4 +1,4 @@
-import { EDIT_TODO, ADD_TODO, TOGGLE_STATUS } from "./actionTypes";
+import { EDIT_TODO, ADD_TODO, TOGGLE_STATUS, REMOVE_TODO } from "./actionTypes";
 
 const initialState = {
   todos: [
@@ -13,7 +13,18 @@ const initialState = {
       isDone: true
     },
   ],
-  logs: []
+  logs: [
+    { 
+      name: 'Interview with MFEC PCL',
+      time: '1/Jan/21 13:01:02',
+      title: 'Created',
+    },
+    {
+      name: 'Interview with SCB PCL',
+      time: '2/Jan/21 13:11:22',
+      title: 'Created',
+    },
+  ]
 };
 
 const reducer = (state = initialState, action) => {
@@ -29,6 +40,10 @@ const reducer = (state = initialState, action) => {
     case EDIT_TODO:
       curTodos = [...state.todos];
       curTodos[action.id] = { ...state.todos[action.id], name: action.name, info: action.info };
+      return { ...state, todos: curTodos };
+    case REMOVE_TODO:
+      curTodos = [...state.todos];
+      curTodos.splice(action.id, 1);
       return { ...state, todos: curTodos };
     default: return state;
   };

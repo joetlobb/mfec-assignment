@@ -6,7 +6,7 @@ const History = (props) => {
   }, [props]);
 
   const back = () => {
-    props.history.goBack();
+    // props.history.goBack();
   }
 
   return (
@@ -24,8 +24,9 @@ const History = (props) => {
           <div className="flex-none w-0.5"></div>
           <div className="flex-grow">
             <div className="flex justify-center">
-              {/* <input className=" mr-2 border-b pl-4 pt-1" size="20" placeholder="Enter some task..."></input>
-              <button className=" px-4 bg-indigo-500 hover:bg-indigo-700 focus:bg-indigo-700 text-white rounded-lg px-0 py-1 font-semibold">Search</button> */}
+              {/* <input className=" mr-2 border-b pl-4 pt-1" size="20" placeholder="Enter some task..."></input> */}
+              <button className=" px-4 bg-indigo-500 hover:bg-indigo-700 focus:bg-indigo-700 text-white 
+              rounded-lg px-0 py-1 font-semibold">Clear all logs</button>
             </div>
           </div>
           <div className="flex-none w-0.5"></div>
