@@ -25,8 +25,8 @@ function App() {
         <Route path="/history" exact component={History} />
       </div>
       <footer className="w-screen bg-indigo-900 p-4">
-        <div className="text-center text-gray-50 font-light tracking-wider">Assignment Completed by Gulyapas Poonkawinsiri.
-          <br></br>Using React Hooks and Tailwind
+        <div className="text-center text-sm text-gray-50 font-light tracking-wider">Assignment Completed by Gulyapas Poonkawinsiri.
+          <br></br>Using React Hooks and Tailwind (First Time Usage)
           <br></br>Github Source Code</div>
       </footer>
     </BrowserRouter>

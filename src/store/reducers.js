@@ -1,4 +1,4 @@
-import { TOGGLE_STATUS } from "./actionTypes";
+import { EDIT_TODO, ADD_TODO, TOGGLE_STATUS } from "./actionTypes";
 
 const initialState = {
   todos: [
@@ -17,12 +17,19 @@ const initialState = {
 };
 
 const reducer = (state = initialState, action) => {
+  let curTodos = [];
   switch (action.type) {
     case TOGGLE_STATUS:
-      const curTodos = [...state.todos];
-      curTodos[action.id] = {...state.todos[action.id]};
+      curTodos = [...state.todos];
+      curTodos[action.id] = { ...state.todos[action.id] };
       curTodos[action.id].isDone = !curTodos[action.id].isDone;
-      return {...state, todos: curTodos};
+      return { ...state, todos: curTodos };
+    case ADD_TODO:
+      return { ...state, todos: state.todos.concat({ name: action.name, info: action.info }) };
+    case EDIT_TODO:
+      curTodos = [...state.todos];
+      curTodos[action.id] = { ...state.todos[action.id], name: action.name, info: action.info };
+      return { ...state, todos: curTodos };
     default: return state;
   };
 };
