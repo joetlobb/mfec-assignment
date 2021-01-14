@@ -7,6 +7,11 @@ module.exports = {
       center: true,
       padding: '1rem',
     },
+    fontFamily: {
+      'sans': ['Merriweather', 'Helvetica', 'Arial', 'sans-serif'],
+      'serif': ['ui-serif', 'Georgia'],
+      'mono': ['ui-monospace', 'SFMono-Regular']
+    }
   },
   variants: {
     extend: {},
