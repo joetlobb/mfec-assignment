@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
 
 import { toggleTodo, addTodo } from '../../store/actions';
-import Todo from '../Todo/Todo';
+import Todo from './Todo/Todo';
 
 const Home = React.memo((props) => {
   const [inputTodo, setInputTodo] = useState({ name: '', info: '' });
@@ -17,6 +17,7 @@ const Home = React.memo((props) => {
 
   const push = () => {
     console.log(matchedSearch)
+    console.log(props.todosStatus)
   };
 
   const inputHandler = (input, desc) => {

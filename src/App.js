@@ -7,6 +7,9 @@ import History from './components/History/History';
 function App() {
   return (
     <BrowserRouter>
+      <div className="w-3/5 h-3/5">
+        <img src="/assets/thumbnail.png" alt="" />
+      </div>
       <nav className="w-screen sm:flex justify-start bg-indigo-900">
         <ul className="items-center ">
           <li className="m-2.5 ml-24 pr-8 py-3 text-center inline-block 
@@ -27,7 +30,7 @@ function App() {
       <footer className="w-screen bg-indigo-900 p-4">
         <div className="text-center text-sm text-gray-50 font-light tracking-wider">Assignment Completed by Gulyapas Poonkawinsiri.
           <br></br>Using React Hooks and Tailwind (First Time Usage)</div>
-          <br></br><a className="flex justify-center w-48 mx-auto bg-white rounded-lg hover:bg-red-400" href="https://github.com/joetlobb/mfec-assignment">Github Source Code</a>
+        <br></br><a className="flex justify-center w-48 mx-auto bg-white rounded-lg hover:bg-red-400" href="https://github.com/joetlobb/mfec-assignment">Github Source Code</a>
       </footer>
     </BrowserRouter>
   );

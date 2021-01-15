@@ -2,24 +2,30 @@ import React, { useEffect, useRef, useState } from 'react';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faCheck } from '@fortawesome/free-solid-svg-icons'
-import * as classes from '../../styles/iconClassName';
+import * as classes from '../../../styles/iconClassName';
 import { connect } from 'react-redux';
-import { editTodo, removeTodo } from '../../store/actions';
-
-
+import { editTodo, removeTodo } from '../../../store/actions';
 
 const Todo = (props) => {
   const [inputEditing, setInputEditing] = useState({ editing: false, id: null });
   const [inputTodo, setInputTodo] = useState({ name: null, info: null });
   const inputRef = useRef();
 
+  // const [props.todos, setTodoLists] = useState([]);
+
   useEffect(() => {
     console.log('TODO RENDERING');
-  }, []);
+    // setTodoLists(props.todos);
+    console.log(props.todos)
+  }, [props.todos]);
 
   useEffect(() => {
     if (inputEditing.editing) inputRef.current.focus();
   }, [inputEditing.editing, inputRef]);
+
+  // useCallback(() => {
+  //   if (props.todos === props.todos) return;
+  // }, [props.todos, props.todos]);
 
   const editingHandler = (id) => {
     switch (inputEditing.editing) {
@@ -77,16 +83,16 @@ const Todo = (props) => {
               <div className="flex justify-center pt-2 text-xs">Editing...</div>
               <div className="flex flex-row items-center justify-center">
                 <div className="flex flex-col">
-                  {inputEditing.editing ? null
-                    : todo.isDone ?
+                  {/* {inputEditing.editing ? null
+                    : 
                       <FontAwesomeIcon icon={faCheck}
                         className={classes.isDone} onClick={() => props.toggle(id, todo.name)} />
                       : <FontAwesomeIcon icon={faCheck}
-                        className={classes.isNotDone} onClick={() => props.toggle(id, todo.name)} />}
+                        className={classes.isNotDone} onClick={() => props.toggle(id, todo.name)} />} */}
 
                   <form className="flex flex-row justify-center" onSubmit={(e) => onSubmitHandler(e, id, 'edit')} >
                     <div className="flex flex-col">
-                      <input className="text-md font-medium p-2 pb-0.5 leading-4 border-b border-gray-300 hover:border-indigo-500 focus:outline-none focus:border-red-800"
+                      <input className="text-md font-medium p-2 pb-0.5 sm:px-0 md:px-2 leading-4 border-b border-gray-300 hover:border-indigo-500 focus:outline-none focus:border-red-800"
                         placeholder={todo.name} onChange={(e) => inputEditFieldHandler(e.target.value, 'name')}
                         ref={inputRef}>
                       </input>
@@ -96,8 +102,8 @@ const Todo = (props) => {
                     </div>
                     <button >
                       <FontAwesomeIcon icon={faCheck}
-                        className="mr-0 sm:mr-2.5 px-1 text-2xl rounded-full border border-gray-300 text-gray-300 hover:border-indigo-700 
-                    hover:bg-indigo-700 hover:text-white my-auto ml-2 mr-0 sm:mx-2 h-12 hover:bg-indigo-600"
+                        className="ml-2 mr-0 md:mx-2 my-auto px-1 text-2xl rounded-full border border-gray-300 text-gray-300 hover:border-indigo-700 
+                    hover:bg-indigo-700 hover:text-white h-12 hover:bg-indigo-600"
                         onClick={(e) => onSubmitHandler(e, id, 'edit')}
                       />
                     </button>
@@ -116,16 +122,21 @@ const Todo = (props) => {
           </React.Fragment>
         );
       } else {
+        // console.log('TODOS RENDERING')
         return (
           <React.Fragment key={todo.name + id}>
             <div
               className="rounded-lg bg-white border border-gray-300 dark:bg-gray-900 dark:border-gray-800 pl-2 pr-3.5">
               <div className="flex flex-row items-center justify-start">
-                {todo.isDone ?
+                <div>{todo.isDone ? 'todo is done' : 'todo is pending'}</div>
+                <FontAwesomeIcon icon={faCheck}
+                    className={todo.isDone ? classes.isDone : classes.isNotDone} onClick={() => props.toggle(id, todo.name)} />
+              
+                {/* {todo.isDone ?
                   <FontAwesomeIcon icon={faCheck}
                     className={classes.isDone} onClick={() => props.toggle(id, todo.name)} />
                   : <FontAwesomeIcon icon={faCheck}
-                    className={classes.isNotDone} onClick={() => props.toggle(id, todo.name)} />}
+                    className={classes.isNotDone} onClick={() => props.toggle(id, todo.name)} />} */}
                 <div className="flex flex-col">
                   <div className="text-md font-medium pt-2 leading-4 break-all break-words"
                     onClick={() => editingHandler(id)}>
