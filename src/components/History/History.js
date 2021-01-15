@@ -5,6 +5,7 @@ import Logs from './Logs/Logs';
 
 const History = (props) => {
   useEffect(() => {
+    console.log('HISTORY RENDERING')
     // console.log(props.logs)
   }, [props]);
 

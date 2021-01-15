@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useReducer, useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faCheck } from '@fortawesome/free-solid-svg-icons'
@@ -15,10 +15,12 @@ const Todo = (props) => {
     console.log('TODO RENDERING');
   }, []);
 
+  // focusing on todo edit input element
   useEffect(() => {
     if (inputEditing.editing) inputRef.current.focus();
   }, [inputEditing.editing, inputRef]);
 
+  // set input element state and isEditing status
   const editingHandler = (id) => {
     switch (inputEditing.editing) {
       case true:
@@ -43,6 +45,7 @@ const Todo = (props) => {
     }
   }
 
+  // update input element state on changed
   const inputEditFieldHandler = (input, desc) => {
     if (desc === 'name') setInputTodo({ ...inputTodo, name: input });
     if (desc === 'info') setInputTodo({ ...inputTodo, info: input });
@@ -66,12 +69,10 @@ const Todo = (props) => {
   }
 
   let todos = null;
-
   if (props.todos.length !== 0) {
     todos = props.todos.map((todo, id) => {
 
       // in editing mode
-
       if (inputEditing.editing && inputEditing.id === id) {
         return (
           <React.Fragment key={todo.name + id}>
@@ -82,24 +83,26 @@ const Todo = (props) => {
                 <div className="flex flex-col">
                   <form className="flex flex-row justify-center" onSubmit={(e) => onSubmitHandler(e, id, 'edit')} >
                     <div className="flex flex-col">
-                      <input className="text-md font-medium p-2 pb-0.5 sm:px-0 md:px-2 leading-4 border-b border-gray-300 hover:border-indigo-500 focus:outline-none focus:border-red-800"
+                      <input className="text-md font-medium p-2 pb-0.5 sm:px-0 md:px-2 leading-4 border-b border-gray-300 
+                      hover:border-indigo-500 focus:outline-none focus:border-red-800"
                         placeholder={todo.name} onChange={(e) => inputEditFieldHandler(e.target.value, 'name')}
                         ref={inputRef}>
                       </input>
-                      <input className="text-xs font-thin text-gray-500 mb-2 p-1 pl-2 pb-0.5 border-b border-gray-300 hover:border-indigo-500 focus:outline-none focus:border-red-800"
+                      <input className="text-xs font-thin text-gray-500 mb-2 p-1 pl-2 pb-0.5 border-b border-gray-300 
+                      hover:border-indigo-500 focus:outline-none focus:border-red-800"
                         placeholder={todo.info} onChange={(e) => inputEditFieldHandler(e.target.value, 'info')}>
                       </input>
                     </div>
                     <button >
                       <FontAwesomeIcon icon={faCheck}
-                        className="ml-2 mr-0 md:mx-2 my-auto px-1 text-2xl rounded-full border border-gray-300 text-gray-300 hover:border-indigo-700 
+                        className="ml-2 mr-0 md:mx-2 my-auto px-1 text-2xl rounded-full border border-gray-300 text-gray-300 
+                        hover:border-indigo-700 
                     hover:bg-indigo-700 hover:text-white h-12 hover:bg-indigo-600"
                         onClick={(e) => onSubmitHandler(e, id, 'edit')}
                       />
                     </button>
                   </form>
                   <div className="flex justify-center">
-
                     <button className=" mx-auto mb-1 sm:mr-2.5 px-1 h-6 w-20 text-xs  rounded-full border border-gray-300 text-gray-300
                     hover:bg-red-400   hover:text-white hover:border-red-500 ml-2 mr-0 sm:mx-2"
                       onClick={(e) => onSubmitHandler(e, id, 'del')}>
@@ -114,7 +117,6 @@ const Todo = (props) => {
       } else {
 
         // in default mode (not editing)
-
         return (
           <React.Fragment key={todo.name + id}>
             <div
@@ -125,18 +127,18 @@ const Todo = (props) => {
                   : <div className="flex mr-2.5 min-w-6 h-6 rounded-full border border-gray-300 text-gray-300 
                   " onClick={() => toggleTodoHandler(id, todo.name)}>
                     <div className="m-auto w-4 h-4  rounded-lg hover:border-indigo-700 hover:bg-indigo-700"></div>
-                    </div>}
+                  </div>}
                 <div className="flex flex-col">
-                      <div className="text-md font-medium pt-2 leading-4 break-words"
-                        onClick={() => editingHandler(id)}>
-                        {todo.name}
-                      </div>
-                      <div className="text-xs font-thin text-gray-500 pb-0.5 break-words"
-                        onClick={() => editingHandler(id)}>
-                        {todo.info}
-                      </div>
-                    </div>
+                  <div className="text-md font-medium pt-2 leading-4 break-words"
+                    onClick={() => editingHandler(id)}>
+                    {todo.name}
                   </div>
+                  <div className="text-xs font-thin text-gray-500 pb-0.5 break-words"
+                    onClick={() => editingHandler(id)}>
+                    {todo.info}
+                  </div>
+                </div>
+              </div>
             </div>
           </React.Fragment>
         )
@@ -145,23 +147,23 @@ const Todo = (props) => {
   };
 
   return (
-            <React.Fragment>
-              <div className={props.todos ? "grid grid-cols-1 sm:grid-cols-2 gap-y-4 sm:gap-4 mx-2 sm:mx-8" : ""}>
-                {todos}
-              </div>
-            </React.Fragment>
+    <React.Fragment>
+      <div className={props.todos ? "grid grid-cols-1 sm:grid-cols-2 gap-y-4 sm:gap-4 mx-2 sm:mx-8" : ""}>
+        {todos}
+      </div>
+    </React.Fragment>
   );
 };
 
 const mapStateToProps = state => {
   return {
-              todos: state.reducers.todos
+    todos: state.reducers.todos
   };
 };
 
 const mapDispatchToProps = dispatch => {
   return {
-              onToggleTodo: (id, name) => dispatch(toggleTodo(id, name)),
+    onToggleTodo: (id, name) => dispatch(toggleTodo(id, name)),
     onEditTodo: (id, name, info) => dispatch(editTodo(id, name, info)),
     onRemoveTodo: (id, name) => dispatch(removeTodo(id, name))
   };
