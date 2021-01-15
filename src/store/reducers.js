@@ -10,6 +10,26 @@ const initialState = {
     {
       name: 'Interview with SCB PCL',
       info: '2/Jan/21 13:11:22',
+      isDone: false
+    },
+    {
+      name: 'Interview with KBANK PCL',
+      info: '@ CENTRAL WORLD',
+      isDone: true
+    },
+    {
+      name: 'Interview with KRUNGSRI PCL',
+      info: '@ Bangkok',
+      isDone: false
+    },
+    {
+      name: 'Interview with BBL PCL',
+      info: '@ CNX',
+      isDone: false
+    },
+    {
+      name: 'Interview with UOB PCL',
+      info: 'Update trading account, request for derivative account apart from cash account',
       isDone: true
     },
   ],
@@ -24,6 +44,26 @@ const initialState = {
     },
     {
       name: '+ Interview with SCB PCL',
+      time: '2/1/2021 13:11:22',
+      title: 'Created',
+    },
+    {
+      name: '+ Interview with KBANK PCL',
+      time: '2/1/2021 13:11:22',
+      title: 'Created',
+    },
+    {
+      name: '+ Interview with KRUNGSRI PCL',
+      time: '2/1/2021 13:11:22',
+      title: 'Created',
+    },
+    {
+      name: '+ Interview with BBL PCL',
+      time: '2/1/2021 13:11:22',
+      title: 'Created',
+    },
+    {
+      name: '+ Interview with UOB PCL',
       time: '2/1/2021 13:11:22',
       title: 'Created',
     },

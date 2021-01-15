@@ -108,7 +108,7 @@ const Home = React.memo((props) => {
                   onClick={(e) => onSubmitHandler(e, 'search')}
                 >Search</button>
               </div>
-              {enableInfoBtn ? <button className="block w-16 sm:inline-block mx-auto mb-2 px-1 bg-red-500 hover:bg-indigo-700 
+              {enableInfoBtn ? <button className="block sm:inline-block mx-auto mb-2 px-2 bg-red-500 hover:bg-indigo-700 
                 focus:bg-indigo-700 text-xs text-white rounded-lg px-0 py-1 font-semibold focus:outline-none "
                 onClick={(e) => onSubmitHandler(e, 'addInfo')}>Add info</button>
                 : null}
