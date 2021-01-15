@@ -121,20 +121,22 @@ const Todo = (props) => {
               className="rounded-lg bg-white border border-gray-300 dark:bg-gray-900 dark:border-gray-800 pl-2 pr-3.5">
               <div className="flex flex-row items-center justify-start">
                 {todo.isDone ? <FontAwesomeIcon icon={faCheck}
-                  className={classes.isDone} onClick={() => toggleTodoHandler(id, todo.name)} /> : 
-                  <div className="mr-2.5 px-1 min-w-6 h-6 rounded-full border border-gray-300 text-gray-300 
-                  hover:border-indigo-700 hover:bg-indigo-700 hover:text-white" onClick={() => toggleTodoHandler(id, todo.name)}></div>}
+                  className={classes.isDone} onClick={() => toggleTodoHandler(id, todo.name)} />
+                  : <div className="flex mr-2.5 min-w-6 h-6 rounded-full border border-gray-300 text-gray-300 
+                  " onClick={() => toggleTodoHandler(id, todo.name)}>
+                    <div className="m-auto w-4 h-4  rounded-lg hover:border-indigo-700 hover:bg-indigo-700"></div>
+                    </div>}
                 <div className="flex flex-col">
-                  <div className="text-md font-medium pt-2 leading-4 break-words"
-                    onClick={() => editingHandler(id)}>
-                    {todo.name}
+                      <div className="text-md font-medium pt-2 leading-4 break-words"
+                        onClick={() => editingHandler(id)}>
+                        {todo.name}
+                      </div>
+                      <div className="text-xs font-thin text-gray-500 pb-0.5 break-words"
+                        onClick={() => editingHandler(id)}>
+                        {todo.info}
+                      </div>
+                    </div>
                   </div>
-                  <div className="text-xs font-thin text-gray-500 pb-0.5 break-words"
-                    onClick={() => editingHandler(id)}>
-                    {todo.info}
-                  </div>
-                </div>
-              </div>
             </div>
           </React.Fragment>
         )
@@ -143,23 +145,23 @@ const Todo = (props) => {
   };
 
   return (
-    <React.Fragment>
-      <div className={props.todos ? "grid grid-cols-1 sm:grid-cols-2 gap-y-4 sm:gap-4 mx-2 sm:mx-8" : ""}>
-        {todos}
-      </div>
-    </React.Fragment>
+            <React.Fragment>
+              <div className={props.todos ? "grid grid-cols-1 sm:grid-cols-2 gap-y-4 sm:gap-4 mx-2 sm:mx-8" : ""}>
+                {todos}
+              </div>
+            </React.Fragment>
   );
 };
 
 const mapStateToProps = state => {
   return {
-    todos: state.reducers.todos
+              todos: state.reducers.todos
   };
 };
 
 const mapDispatchToProps = dispatch => {
   return {
-    onToggleTodo: (id, name) => dispatch(toggleTodo(id, name)),
+              onToggleTodo: (id, name) => dispatch(toggleTodo(id, name)),
     onEditTodo: (id, name, info) => dispatch(editTodo(id, name, info)),
     onRemoveTodo: (id, name) => dispatch(removeTodo(id, name))
   };
