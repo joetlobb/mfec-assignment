@@ -131,9 +131,7 @@ const Home = React.memo((props) => {
 
       {/* todo lists */}
       { matchedSearch.length === 0 && enableClearBtn ? <div className="flex justify-center mb-4">Not Found!</div> : null}
-      <Todo todos={matchedSearch.length !== 0 ? matchedSearchTodos : props.todosStatus}
-        toggle={props.onToggleTodo}
-      />
+      <Todo todos={matchedSearch.length !== 0 ? matchedSearchTodos : props.todosStatus} />
     </React.Fragment >
   );
 });

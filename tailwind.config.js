@@ -11,6 +11,16 @@ module.exports = {
       'sans': ['Merriweather', 'Helvetica', 'Arial', 'sans-serif'],
       'serif': ['ui-serif', 'Georgia'],
       'mono': ['ui-monospace', 'SFMono-Regular']
+    },
+    minWidth: {
+      '0': '0',
+      '1/4': '25%',
+      '1/2': '50%',
+      '3/4': '75%',
+      'full': '100%',
+      '4': '1rem',
+      '6': '1.5rem',
+      '8': '2rem'
     }
   },
   variants: {
