@@ -2,9 +2,9 @@ import React, { useEffect, useRef, useState } from 'react';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faCheck } from '@fortawesome/free-solid-svg-icons'
-import * as classes from '../../../styles/iconClassName';
 import { connect } from 'react-redux';
 import { editTodo, removeTodo, toggleTodo } from '../../../store/actions';
+import ToggleStatusButton from '../../../shared/UI/ToggleStatusButton/ToggleStatusButton';
 
 const Todo = (props) => {
   const [inputEditing, setInputEditing] = useState({ editing: false, id: null });
@@ -13,6 +13,7 @@ const Todo = (props) => {
 
   useEffect(() => {
     console.log('TODO RENDERING');
+
   }, []);
 
   // focusing on todo edit input element
@@ -65,7 +66,9 @@ const Todo = (props) => {
   };
 
   const toggleTodoHandler = (id, name) => {
+    console.log(id, name)
     props.onToggleTodo(id, name);
+    // console.log(document.activeElement)
   }
 
   let todos = null;
@@ -121,13 +124,27 @@ const Todo = (props) => {
           <React.Fragment key={todo.name + id}>
             <div
               className="rounded-lg bg-white border border-gray-300 dark:bg-gray-900 dark:border-gray-800 pl-2 pr-3.5">
+              <div onClick={() => console.log(props.todos)}>{todo.isDone ? 'done!' : 'false'}</div>
               <div className="flex flex-row items-center justify-start">
-                {todo.isDone ? <FontAwesomeIcon icon={faCheck}
-                  className={classes.isDone} onClick={() => toggleTodoHandler(id, todo.name)} />
-                  : <div className="flex mr-2.5 min-w-6 h-6 rounded-full border border-gray-300 text-gray-300 
-                  " onClick={() => toggleTodoHandler(id, todo.name)}>
-                    <div className="m-auto w-4 h-4  rounded-lg hover:border-indigo-700 hover:bg-indigo-700"></div>
-                  </div>}
+
+                <div className="flex mr-2.5 min-w-6 h-6 rounded-full border border-gray-400"
+                >
+                  {!todo.isDone ?
+                    <ToggleStatusButton
+                      isDone={todo.isDone}
+                      id={id}
+                      name={todo.name}
+                      toggle={toggleTodoHandler} />
+                    : null}
+
+                  {todo.isDone ? <ToggleStatusButton
+                    isDone={todo.isDone}
+                    id={id}
+                    name={todo.name}
+                    toggle={toggleTodoHandler} /> : null}
+
+
+                </div>
                 <div className="flex flex-col">
                   <div className="text-md font-medium pt-2 leading-4 break-words"
                     onClick={() => editingHandler(id)}>

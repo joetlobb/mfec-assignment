@@ -21,10 +21,10 @@ const App = props => {
   let _a = mainHeight % 4;
   _a = mainHeight + (4 - _a); 
   mainCssHeight = 'min-h-' + (_a/4)
-  console.log(_a)
-  console.log(_a/4)
-  console.log(mainCssHeight)
-  console.log(mainCssHeight, mainHeight)
+  // console.log(_a)
+  // console.log(_a/4)
+  // console.log(mainCssHeight)
+  // console.log(mainCssHeight, mainHeight)
 
   return (
     <BrowserRouter>
