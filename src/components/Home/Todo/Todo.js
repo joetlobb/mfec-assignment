@@ -10,10 +10,28 @@ const Todo = (props) => {
   const [inputEditing, setInputEditing] = useState({ editing: false, id: null });
   const [inputTodo, setInputTodo] = useState({ name: null, info: null });
   const inputRef = useRef();
+  const [isAppleDevice, setIsAppleDevice] = useState(false);
 
+  // useEffect(() => {
+  //   console.log('TODO RENDERING');
+  // }, []);
+
+  // check for iOS device
   useEffect(() => {
-    console.log('TODO RENDERING');
+    const checkAppleDevice = () => {
+      return (
+        (navigator.userAgent.toLowerCase().indexOf("ipad") > -1) ||
+        (navigator.userAgent.toLowerCase().indexOf("iphone") > -1) ||
+        (navigator.userAgent.toLowerCase().indexOf("ipod") > -1)
+      );
+    };
 
+    let isAppleDevice = false;
+    if (!isAppleDevice) {
+      isAppleDevice = checkAppleDevice()
+    }
+    setIsAppleDevice(isAppleDevice)
+    console.log('isAppleDevice', isAppleDevice);
   }, []);
 
   // focusing on todo edit input element
@@ -68,7 +86,6 @@ const Todo = (props) => {
   const toggleTodoHandler = (id, name) => {
     console.log(id, name)
     props.onToggleTodo(id, name);
-    // console.log(document.activeElement)
   }
 
   let todos = null;
@@ -124,26 +141,22 @@ const Todo = (props) => {
           <React.Fragment key={todo.name + id}>
             <div
               className="rounded-lg bg-white border border-gray-300 dark:bg-gray-900 dark:border-gray-800 pl-2 pr-3.5">
-              <div onClick={() => console.log(props.todos)}>{todo.isDone ? 'done!' : 'false'}</div>
               <div className="flex flex-row items-center justify-start">
-
-                <div className="flex mr-2.5 min-w-6 h-6 rounded-full border border-gray-400"
-                >
+                <div className="flex mr-2.5 min-w-6 h-6 rounded-full border border-gray-400">
                   {!todo.isDone ?
                     <ToggleStatusButton
                       isDone={todo.isDone}
                       id={id}
                       name={todo.name}
+                      isAppleDevice={isAppleDevice}
                       toggle={toggleTodoHandler} />
                     : null}
-
                   {todo.isDone ? <ToggleStatusButton
                     isDone={todo.isDone}
                     id={id}
                     name={todo.name}
+                    isAppleDevice={isAppleDevice}
                     toggle={toggleTodoHandler} /> : null}
-
-
                 </div>
                 <div className="flex flex-col">
                   <div className="text-md font-medium pt-2 leading-4 break-words"

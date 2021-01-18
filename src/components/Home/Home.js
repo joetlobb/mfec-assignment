@@ -18,6 +18,7 @@ const Home = React.memo((props) => {
   const push = () => {
     console.log(matchedSearch)
     console.log(props.todosStatus)
+    console.log(document.activeElement)
   };
 
   const inputHandler = (input, desc) => {

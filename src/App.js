@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react';
+import { useRef } from 'react';
 import { BrowserRouter, Link, Route } from 'react-router-dom';
 
 import './App.css';
@@ -6,21 +6,31 @@ import Home from './components/Home/Home';
 import History from './components/History/History';
 
 const App = props => {
-  const [mainHeight, setMainHeight] = useState(0);
+  // const [fullMainHeight, setFullMainHeight] = useState(0);
+  // const [prevHeight, setPrevHeight] = useState(0);
   const navRef = useRef();
+  const mainRef = useRef();
   const footRef = useRef();
 
-  useEffect(() => {
-    const windowH = window.innerHeight;
-    const navH = navRef.current.clientHeight;
-    const footH = footRef.current.clientHeight;
-    setMainHeight(windowH - navH - footH);
-  }, []);
+  // useEffect(() => {
+  //   const windowH = window.innerHeight;
+  //   const navH = navRef.current.clientHeight;
+  //   const footH = footRef.current.clientHeight;
+  //   setFullMainHeight(windowH - navH - footH);
+  // }, [navRef, footRef]);
 
-  let mainCssHeight = '';
-  let _a = mainHeight % 4;
-  _a = mainHeight + (4 - _a); 
-  mainCssHeight = 'min-h-' + (_a/4)
+  // let mainCssHeight = '';
+  // if (mainRef.current) {
+  //   setPrevHeight(mainRef.current.clientHeight)
+  //   if (prevHeight <= fullMainHeight) {
+  //     let _a = fullMainHeight % 4;
+  //     _a = fullMainHeight + (4 - _a);
+  //     mainCssHeight = ' h-' + (_a / 4)
+  //   } else {
+  //     mainCssHeight = 'h-full'
+  //   }
+  // }
+
   // console.log(_a)
   // console.log(_a/4)
   // console.log(mainCssHeight)
@@ -43,7 +53,10 @@ const App = props => {
         </ul>
       </nav>
 
-      <div className={"container lg-auto pb-8 sm:py-8 border-l border-r border-solid border-gray-200 " + mainCssHeight}>
+      <div className={"container lg-auto pb-8 sm:py-8 border-l border-r border-solid border-gray-200 "
+        // + mainCssHeight
+      }
+        ref={mainRef}>
         <Route path="/" exact component={Home} />
         <Route path="/history" exact component={History} />
       </div>
